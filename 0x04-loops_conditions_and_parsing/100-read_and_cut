@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# displays username, user id and home directory for each line of /etc/passwd.
+# displaying the username, user id ,home directory for each line.
 
 input="/etc/passwd"
 while IFS= read -r line
