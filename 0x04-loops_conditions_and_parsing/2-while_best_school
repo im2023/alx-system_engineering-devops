@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#the script is displaying "Holberton School" 10 times with while loops.
+
+counter=0
+
+while [ $counter -lt 10 ]
+do
+ echo "Best School"
+ (( counter++ ))
+done
