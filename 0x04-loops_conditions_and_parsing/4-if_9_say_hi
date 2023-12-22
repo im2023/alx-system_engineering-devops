@@ -12,3 +12,4 @@ do
     fi
     (( COUNT+=1 ))
 done
+

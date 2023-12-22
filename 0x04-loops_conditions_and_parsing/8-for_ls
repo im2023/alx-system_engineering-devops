@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# displaying content of the current working directory
+
+for count in *ing
+do
+    echo "$count" | cut -d'-' -f2
+done
+
