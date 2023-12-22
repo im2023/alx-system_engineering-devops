@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# displays the content of the current working directory.
+# displayed content of working directory content.
 
 for i in *
 do
