@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script displays a statement indefinitely
+# The script is displaying statement indefinitely.
 while true; do
     echo "To infinity and beyond"
     sleep 2
