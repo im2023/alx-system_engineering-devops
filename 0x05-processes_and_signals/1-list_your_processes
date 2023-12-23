@@ -4,5 +4,4 @@
 # Displaying user-oriented format.
 # Showing process hierarchy.
 
-ps -a -x -u -f
-
+ps auxf
