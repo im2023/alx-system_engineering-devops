@@ -3,4 +3,5 @@
 # showing all processes, for all the users,also not have a TTY.
 # Displaying user-oriented format.
 # Showing process hierarchy.
-ps aux --forest
+
+ps -auxf
