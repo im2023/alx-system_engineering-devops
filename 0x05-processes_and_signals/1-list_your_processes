@@ -4,4 +4,4 @@
 # Displaying user-oriented format.
 # Showing process hierarchy.
 
-ps -auxf
+ps aux --forest | head -50
