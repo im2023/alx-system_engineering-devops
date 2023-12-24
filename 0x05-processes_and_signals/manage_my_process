@@ -2,7 +2,7 @@
 # writes I am alive to the file /tmp/my_process.
 # Pausing two seconds in between each message
 
-while "true"
+while true
 do
   echo "I am alive!" >> /tmp/my_process
   sleep 2
