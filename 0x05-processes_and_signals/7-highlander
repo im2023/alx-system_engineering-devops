@@ -3,6 +3,7 @@
 # to infinity and beyond indefinitely
 # With a sleep 2 between each iteration
 # I am invincible!!! when receiving a SIGTERM signal.
+# With a sleep 2 between each iteration.
 
 trap 'echo "I am invincible!!!"' SIGTERM
 while :
