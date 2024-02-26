@@ -36,3 +36,4 @@ sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUl
 sudo service nginx restart
 
 echo -e "\n${green}Completed.${reset} ✅\n"
+
