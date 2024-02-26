@@ -1,27 +1,7 @@
 #!/usr/bin/env bash
-# Installing Nginx.
-blu='\e[1;34m'
-brwn='\e[0;33m'
-gren='\e[1;32m'
-reset='\033[0m'
+# Installing Nginx
 
-echo -e "${blu}Updating and installing ${brwn}Nginx${blu}.${reset}\n"
-sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
-
-echo -e "\n${blu}Setting up some minor stuff.${reset}\n"
-
-sudo service nginx start
-
-sudo ufw allow 'Nginx HTTP'
-
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
-
-echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
-
-sudo service nginx restart
-
-echo -e "\n${gren}Completed.${reset} ✅\n"
+apt-get update
+apt-get install -y nginx
+echo "Holberton School" > /var/www/html/index.html
+service nginx start
