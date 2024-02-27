@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Installing nginx web server.
-#
+
 # The colors
 blue='\e[1;34m'
 brown='\e[0;33m'
