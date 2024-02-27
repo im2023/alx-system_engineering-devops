@@ -1,43 +1,39 @@
 #!/usr/bin/env bash
-# Installs nginx web server
-#
-# colors
-blue='\e[1;34m'
-brown='\e[0;33m'
-green='\e[1;32m'
-reset='\033[0m'
+#configure a custom 404 page
 
-echo -e "${blue}Updating and installing ${brown}Nginx${blue}.${reset}\n"
-sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
+sudo apt-get update
+sudo apt-get -y install nginx
+ufw allow 'Nginx HTTP'
+chmod -R 755 /var/www
+echo 'Hello World' > /var/www/html/index.html
 
-echo -e "\n${blue}Setting up some minor stuff.${reset}\n"
+new_config=\
+"server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+               root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+        error_page 404 /404.html;
+        location  /404.html {
+            internal;
+        }
+        
+        if (\$request_filename ~ redirect_me){
+            rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
+        }
+}
+"
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+echo "$new_config" > /etc/nginx/sites-available/default
 
-# start nginx service
-sudo service nginx start
-
-# allows nginx on firewall
-sudo ufw allow 'Nginx HTTP'
-
-# Giving the user ownership to website
-sudo chown -R "$USER":"$USER" /var/www/html
-sudo chmod -R 755 /var/www
-
-# Backing-up a default index
-cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
-
-# Creates new index.
-echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
-
-# Setting up /redirect_me to youtube video.
-sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
-
-# Seting up a 404 page.
-echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
-sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
-
-# Restarting the nginx.
-sudo service nginx restart
-
-echo -e "\n${green}Completed.${reset} ✅\n"
+if [ "$(pgrep nginx)" -le 0 ];
+then
+    service nginx start
+else
+    service nginx restart
+fi;
 
