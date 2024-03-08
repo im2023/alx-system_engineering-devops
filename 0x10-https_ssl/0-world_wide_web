@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Displaying information about subdomains.
+
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 domain [subdomain1 subdomain2 ...]"
+  exit 1
+fi
+
+domain="$1"
+
+subdomains=("www" "lb-01" "web-01" "web-02")
+
+if [ $# -gt 1 ]; then
+  subdomains+=("${@:2}")
+fi
+
+for subdomain in "${subdomains[@]}"; do
+  output=$(dig "$subdomain.$domain" +short)
+  if [ -n "$output" ]; then
+    echo "The subdomain $subdomain has IP address $output"
+  else
+    echo "The subdomain $subdomain does not exist"
+  fi
+done
