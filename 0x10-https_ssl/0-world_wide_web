@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
-# Displaying information about subdomains.
+# reporting information about server domains
+check_domain() {
+	# space sperated list of sub domains
+	SUBDOMAINS='www lb-01 web-01 web-02'
 
-if [ $# -lt 1 ]; then
-  echo "Usage: $0 domain [subdomain1 subdomain2 ...]"
-  exit 1
-fi
+	if [ -z "$1" ]; then
+		exit
+	fi
 
-domain="$1"
-
-subdomains=("www" "lb-01" "web-01" "web-02")
-
-if [ $# -gt 1 ]; then
-  subdomains+=("${@:2}")
-fi
-
-for subdomain in "${subdomains[@]}"; do
-  output=$(dig "$subdomain.$domain" +short)
-  if [ -n "$output" ]; then
-    echo "The subdomain $subdomain has IP address $output"
-  else
-    echo "The subdomain $subdomain does not exist"
-  fi
-done
+	if [ -z "$2" ]; then
+		echo "$SUBDOMAINS" | awk -v domain="$1"\
+		'BEGIN { RS=" " }
+		{split($0,ARR," ");
+		cmd = "dig " ARR[1]"."domain " | grep -A1 \"ANSWER SECTION:\" | tail -n1";
+		system(cmd)
+		close(cmd)}' | awk\
+		'{
+		split($0, DOMS, ".");
+		print "The subdomain " DOMS[1] " is a " $4 " record and points to " $5}'
+	else
+		dig "$2.$1" | grep -A1 "ANSWER SECTION:" | tail -n1 | awk\
+		'{
+		split($0, DOMS, ".");
+		print "The subdomain " DOMS[1] " is a " $4 " record and points to " $5}'
+	fi
+}
+check_domain "$1" "$2"
