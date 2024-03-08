@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
-# script to report information about server domains
-# shellcheck disable=SC2086
+#reporting information about server domains.
 check_domain() {
-	# awk will use record seperator of space
 	# space sperated list of sub domains
 	SUBDOMAINS='www lb-01 web-01 web-02'
 
 	if [ -z "$1" ]; then
 		exit
 	fi
-	# no sub domain specified, do all
+
 	if [ -z "$2" ]; then
 		echo "$SUBDOMAINS" | awk -v domain="$1"\
 		'BEGIN { RS=" " }
