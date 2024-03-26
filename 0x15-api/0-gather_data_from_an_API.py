@@ -2,8 +2,8 @@
 """returning information about
 TODO list progress"""
 
-    import requests
-    import sys
+import requests
+import sys
 
 employeId = sys.argv[1]
 
