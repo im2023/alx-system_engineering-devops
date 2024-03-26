@@ -1,32 +1,33 @@
 #!/usr/bin/python3
 """returning information about
 TODO list progress"""
-if __name__ == '__main__':
-    import requests
-    import sys
+import sys
+import requests
 
-    employeId = sys.argv[1]
+def get_employee_todo_progress(employee_id):
+    url = f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        todos = response.json()
+        EMPLOYEE_NAME = todos[0]['username']
+        TOTAL_NUMBER_OF_TASKS = len(todos)
+        done_tasks = [todo['title'] for todo in todos if todo['completed']]
+        NUMBER_OF_DONE_TASKS = len(done_tasks)
+        
+        print(f"Employee {EMPLOYEE_NAME} is done with tasks({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):")
+        for task in done_tasks:
+            print(f"\t{task}")
+    else:
+        print(f"Failed to fetch data. Status code: {response.status_code}")
 
-    response = requests.get(
-        f'https://jsonplaceholder.typicode.com/users/{employeId}'
-    )
-    EMPLOYEE_NAME = response.json()['name']
-    tasks_response = requests.get(
-        f'https://jsonplaceholder.typicode.com/todos/?userId={employeId}'
-    )
-    TOTAL_NUMBER_OF_TASKS = len(tasks_response.json())
-    NUMBER_OF_DONE_TASKS = 0
-    TASK_TITLE = ""
-    for dict in tasks_response.json():
-        for k, v in dict.items():
-            if k == 'completed' and v is True:
-                NUMBER_OF_DONE_TASKS += 1
-                TASK_TITLE += '\n'
-                TASK_TITLE += '\t '
-                TASK_TITLE += f"{dict['title']}"
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <employee_id>")
+        sys.exit(1)
 
-    print(
-        f'Employee {EMPLOYEE_NAME} is done with tasks({NUMBER_OF_DONE_TASKS}/'
-        f'{TOTAL_NUMBER_OF_TASKS}):', end=""
-    )
-    print(TASK_TITLE)
+    employee_id = sys.argv[1]
+    if not employee_id.isdigit():
+        print("Employee ID must be an integer.")
+        sys.exit(1)
+
+    get_employee_todo_progress(int(employee_id))
