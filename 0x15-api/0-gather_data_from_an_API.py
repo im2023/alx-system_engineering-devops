@@ -15,8 +15,8 @@ def get_employee_todo_progress(employee_id):
         NUMBER_OF_DONE_TASKS = len(done_tasks)
         
         print(f"Employee {EMPLOYEE_NAME} is done with tasks({NUMBER_OF_DONE_TASKS}/{TOTAL_NUMBER_OF_TASKS}):")
-        for task in done_tasks:
-            print(f"\t{task}")
+        for TASK_TITLE in done_tasks:
+            print(f"\t{TASK_TITLE}")
     else:
         print(f"Failed to fetch data. Status code: {response.status_code}")
 
