@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""script to export data in the JSON format."""
+"""The script is exporting data in JSON format"""
 if __name__ == '__main__':
     import json
     import requests
