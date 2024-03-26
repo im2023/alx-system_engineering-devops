@@ -18,11 +18,11 @@ if __name__ == '__main__':
         json_string = {
             str(USER_ID): [
                 {
-                    "task": dictionary['title'],
-                    "completed": dictionary['completed'],
+                    "task": dict['title'],
+                    "completed": dict['completed'],
                     "username": USERNAME,
                 }
-                for dictionary in tasks_response.json()
+                for dict in tasks_response.json()
             ]
         }
         file.write(json.dumps(json_string))
